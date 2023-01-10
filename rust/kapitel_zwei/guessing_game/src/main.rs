@@ -6,8 +6,6 @@ fn main() {
     println!("Rate die Zahl!");
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Die Geheimzahl ist: {secret_number}");
-
     loop {
         println!("Bitte gib deine Schätzung ein.");
 
@@ -17,7 +15,10 @@ fn main() {
             .read_line(&mut guess)
             .expect("Fehler beim Lesen der Zeile");
 
-        let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
         println!("Du hast geschätzt: {guess}");
 
